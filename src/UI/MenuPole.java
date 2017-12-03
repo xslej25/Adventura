@@ -21,7 +21,7 @@ import main.Main;
 
 /**
  *
- * @author xzenj02
+ * @author xslej25
  */
 public class MenuPole extends MenuBar{
     

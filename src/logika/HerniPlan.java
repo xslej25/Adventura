@@ -3,7 +3,9 @@ package logika;
 import java.util.ArrayList;
 import java.util.List;
 import utils.Observer;
+import utils.ObserverZmenyKufru;
 import utils.Subject;
+import utils.SubjektZmenyKufru;
 
 /**
  *  Class HerniPlan - třída představující mapu a stav adventury.
@@ -14,23 +16,30 @@ import utils.Subject;
  *  a pamatuje si aktuální prostor, ve kterém se hráč právě nachází.
  *
  *@author     Jan šlechta
- *@version  28.12.2013
  */
-public class HerniPlan implements Subject {
+public class HerniPlan implements Subject, SubjektZmenyKufru {
     
     private List<Observer> listObserveru = new ArrayList<Observer>();
+    private List<ObserverZmenyKufru> seznamPozorovateluKufru;
     private Prostor aktualniProstor;
     
-    private Kufr kufr;
+    private Hra hra;
      /**
      *  Konstruktor který vytváří jednotlivé prostory a propojuje je pomocí východů.
      *  Jako výchozí aktuální prostor nastaví halu.
      */
-    public HerniPlan() {
+    public HerniPlan(Hra hra) {
         zalozProstoryHry();
-       this.kufr = kufr;
-       
+      this.hra = hra;
+               seznamPozorovateluKufru = new ArrayList<>();
     }
+
+    public Hra getHra() {
+        return hra;
+    }
+    
+    
+    
     /**
      *  Vytváří jednotlivé prostory a propojuje je pomocí východů.
      *  Jako výchozí aktuální prostor nastaví domeček.
@@ -38,15 +47,15 @@ public class HerniPlan implements Subject {
     private void zalozProstoryHry() {
         
         // vytvářejí se jednotlivé prostory
-        Prostor namesti = new Prostor("namesti"," namesti,na kterem je fontana a je to velke rozcesti", 110.5,40);
-        Prostor vrakoviste = new Prostor("vrakoviste", " vrakoviste, mraky plechu, dost materialu", 110.5,40);
-        Prostor tunningShop = new Prostor("tunningShop"," Obchůdek s autodíly", 110.5,40);
-        Prostor zavodSCarlem = new Prostor("zavodSCarlem"," jdeš vyzvat Carla", 110.5,40);
-        Prostor garaz = new Prostor("garaz"," garaz, konečně možnost namontovat díly na auto", 110.5,40);
-        Prostor prace = new Prostor("prace","práce, možnost si vydělat peníze", 110.5,40);
+        Prostor namesti = new Prostor("namesti"," namesti,na kterem je fontana a je to velke rozcesti", 130.5,140);
+        Prostor vrakoviste = new Prostor("vrakoviste", " vrakoviste, mraky plechu, dost materialu", 40.5,50);
+        Prostor tunningShop = new Prostor("tunningShop"," Obchůdek s autodíly", 250.5,250);
+        Prostor zavodSCarlem = new Prostor("zavodSCarlem"," jdeš vyzvat Carla", 240.5,50);
+        Prostor garaz = new Prostor("garaz"," garaz, konečně možnost namontovat díly na auto", 230.5,140);
+        Prostor prace = new Prostor("prace","práce, možnost si vydělat peníze", 40.5,250);
         Prostor jaimehoBarak = new Prostor("jaimehoBarak","Dobrej kámoš, vždycky poradí", 110.5,40);
-        Prostor zkusebniDraha = new Prostor("zkusebniDraha", " otestoval si svoje auto, zeptej se personalu, jak to dopadlo", 110.5,40);
-        Prostor mamincinyDobrutky = new Prostor("mamincinyDobrutky"," cukrářství, určitě půjdou získat nějaké dobrůtky", 110.5,40);
+        Prostor zkusebniDraha = new Prostor("zkusebniDraha", " otestoval si svoje auto, zeptej se personalu, jak to dopadlo", 130.5,250);
+        Prostor mamincinyDobrutky = new Prostor("mamincinyDobrutky"," cukrářství, určitě půjdou získat nějaké dobrůtky", 190.5,50);
         Prostor policejniStanice = new Prostor("policejniStanice"," konečně si našel mistra šerifa", 110.5,40);
         
         // přiřazují se průchody mezi prostory (sousedící prostory)
@@ -79,6 +88,7 @@ public class HerniPlan implements Subject {
         Vec okousanyRohlik = new Vec("okousanyRohlik",true, false,false);
         namesti.vlozVec(okousanyRohlik);
         Vec turbo = new Vec ("turbo",true, true, true);
+        vrakoviste.vlozVec(turbo);
         Vec brzdy = new Vec ("brzdy",true, false,true);
         vrakoviste.vlozVec (brzdy);
         Vec dusik = new Vec ("dusik", true, false,true);       
@@ -146,12 +156,9 @@ public class HerniPlan implements Subject {
      */
     public void setAktualniProstor(Prostor prostor) {
        aktualniProstor = prostor;
+       notifyAllObservers();
     }
     
-    public Kufr getKufr(){
-        return this.kufr;
-    }
-
     @Override
     public void registerObserver(Observer observer) {
         listObserveru.add(observer);
@@ -168,6 +175,21 @@ public class HerniPlan implements Subject {
             listObserveruItem.update();
         }
     }
+
+    @Override
+    public void zaregistrujPozorovatele(ObserverZmenyKufru pozorovatel) {
+        seznamPozorovateluKufru.add(pozorovatel);
+    }
     
+     @Override
+    public void odregistrujPozorovatele(ObserverZmenyKufru pozorovatel) {
+       seznamPozorovateluKufru.remove(pozorovatel);
+    }
     
+    @Override
+    public void upozorniPozorovateleKufru(Kufr kufr) {
+       for (ObserverZmenyKufru pozorovatel : seznamPozorovateluKufru) {
+            pozorovatel.aktualizuj(kufr);
+        }
+    }   
 }

@@ -17,15 +17,17 @@ public class Hra implements IHra{
     private boolean konecHry = false;
     private Kufr kufr;
     private boolean dohrano;
+    private Hra hra;
     
 
     /**
      *  Vytváří hru a inicializuje místnosti (prostřednictvím třídy HerniPlan) a seznam platných příkazů.
      */
     public Hra() {
+        this.hra = hra;
         this.herniPlan = herniPlan;
         Kufr kufr = new Kufr();        
-        herniPlan = new HerniPlan();
+        herniPlan = new HerniPlan(this);
         this.kufr = kufr;
         platnePrikazy = new SeznamPrikazu();
         platnePrikazy.vlozPrikaz(new PrikazNapoveda(platnePrikazy));
@@ -144,6 +146,16 @@ public class Hra implements IHra{
      public HerniPlan getHerniPlan(){
         return herniPlan;
      }
+     
+     public Hra getHra(){
+         this.hra = hra;
+      return hra;
+     }
+
+    @Override
+    public Kufr getKufr() {
+        return kufr;
+    }
     
     
 }

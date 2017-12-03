@@ -35,7 +35,8 @@ public class PrikazSeber implements IPrikaz
      *                         který má sebrat
      *@return zpráva, kterou vypíše hra hráči
      */ 
-    public String proved(String... parametry){
+    public String proved(String... parametry)
+    {
         if(parametry.length == 0){
             return "Co mam sebrat?";
         }
@@ -47,26 +48,31 @@ public class PrikazSeber implements IPrikaz
             return "To tady neni";
         
         }
-        if(kufr.getPocetVeciVKufru()<kufr.getKapacita()){
-        if(vecicka.getPrenositelnost() && vecicka.getViditelnost() ){
-            kufr.vlozitVec(vecicka);
-            aktualniProstor.odebratVec(vecicka);
-        
-        }else{
-            if(vecicka.getViditelnost()){
-              
-            return "nelze odnest";
-           }else{
-               
-               
-               return "nic takoveho tu neni";
-            
+        if(kufr.getPocetVeciVKufru()<kufr.getKapacita())
+        {
+            if(vecicka.getPrenositelnost() && vecicka.getViditelnost())
+            {
+                kufr.vlozitVec(vecicka);
+                aktualniProstor.odebratVec(vecicka);
+                plan.notifyAllObservers();
+            }
+            else
+            {
+                if(vecicka.getViditelnost())
+                {
+                return "nelze odnest";
+                }
+                else
+                {
+                   return "nic takoveho tu neni";
+                }
+            }
         }
-    }
-}else{
-    return "Máš plnej kufr";
-}
-        
+        else
+        {
+        return "Máš plnej kufr";
+        }
+        plan.notifyAllObservers();
        return  neco +" byl sebrán";
     }
     

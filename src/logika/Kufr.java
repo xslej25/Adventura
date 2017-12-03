@@ -3,18 +3,20 @@ package logika;
  * Kontrola kódování: Příliš žluťoučký kůň úpěl ďábelské ódy. */
 
 import java.util.*;
+import utils.SubjektZmenyKufru;
+import utils.ObserverZmenyKufru;
 /*******************************************************************************
  * Instance třídy Kufr představují inventáře ve hře
  *
  * @author    Jan Šlechta
- * @version   28.12.2013
  */
-public class Kufr
+public class Kufr implements SubjektZmenyKufru
 {
     //== Datové atributy (statické i instancí)======================================
     private int kapacita;
     private List<Vec> obsahKufru;
     private List<Vec> namontovaneDily;
+    private List<ObserverZmenyKufru> seznamPozorovatelu;
     //== Konstruktory a tovární metody =============================================
 
     /***************************************************************************
@@ -26,6 +28,7 @@ public class Kufr
         kapacita = 4;
         obsahKufru = new ArrayList<Vec>();
         namontovaneDily = new ArrayList<Vec>();
+        seznamPozorovatelu = new ArrayList<ObserverZmenyKufru>();
     }
 
     //== Nesoukromé metody (instancí i třídy) ======================================
@@ -38,6 +41,7 @@ public class Kufr
     public boolean vlozitVec(Vec neco){
         if(obsahKufru.size()< kapacita && neco.getPrenositelnost()){
             obsahKufru.add(neco);
+            upozorniPozorovateleKufru(this);
             return true;
         }
         else{
@@ -74,6 +78,7 @@ public class Kufr
             if(vecicka.getNazev().equals(neco)){
                 rusena = vecicka;
                 obsahKufru.remove(vecicka);
+                upozorniPozorovateleKufru(this);
                 break;
             }
         }
@@ -130,7 +135,13 @@ public class Kufr
 
         return obsah;
     }
-     
+   
+    
+    
+    public List<Vec> getObsahKufru()
+    {
+        return obsahKufru;
+    }
     /**
      * Metoda pro přidání věci na auto
      * 
@@ -186,4 +197,20 @@ public class Kufr
     }
     //== Soukromé metody (instancí i třídy) ========================================
 
+    @Override
+    public void zaregistrujPozorovatele(ObserverZmenyKufru pozorovatel) {
+        seznamPozorovatelu.add(pozorovatel);
+    }
+
+    @Override
+    public void odregistrujPozorovatele(ObserverZmenyKufru pozorovatel) {
+        seznamPozorovatelu.remove(pozorovatel);
+    }
+
+    @Override
+    public void upozorniPozorovateleKufru(Kufr kufr) {
+        for (ObserverZmenyKufru pozorovatel : seznamPozorovatelu) {
+            pozorovatel.aktualizuj(this);
+        }
+    }
 }

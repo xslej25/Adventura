@@ -16,6 +16,7 @@ public class Vec
     private boolean viditelnost;
     private boolean prenositelnost;
     private boolean namontovatelnost;
+    private String image;
 
     //== Konstruktory a tovární metody =============================================
 
@@ -28,6 +29,7 @@ public class Vec
         this.prenositelnost = prenositelnost;
         this.viditelnost = viditelnost;
         this.namontovatelnost = namontovatelnost;
+        this.image = nazev + ".jpg";
     }
 
     //== Nesoukromé metody (instancí i třídy) ======================================
@@ -96,6 +98,9 @@ public class Vec
         this.prenositelnost = false;
     }
 
+    public String getImage() {
+        return image;
+    }
     
 
     //== Soukromé metody (instancí i třídy) ========================================

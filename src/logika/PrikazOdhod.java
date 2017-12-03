@@ -46,6 +46,7 @@ public static final String NAZEV = "odhod";
            return "Tohle nemáš v kufru";
         }
         aktualniProstor.vlozVec(vecicka);
+        plan.notifyAllObservers();
         return neco + "bylo odhozeno";
         
     }

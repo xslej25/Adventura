@@ -7,7 +7,7 @@ package utils;
 
 /**
  *
- * @author xzenj02
+ * @author JanSlechta
  */
 public interface Subject {
     

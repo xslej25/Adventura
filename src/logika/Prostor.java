@@ -134,7 +134,7 @@ public class Prostor {
      *
      * @return Popis východů - názvů sousedních prostorů
      */
-    private String popisVychodu() {
+    public String popisVychodu() {
         String vracenyText = "vychody:";
         for (Prostor sousedni : vychody) {
             vracenyText += " " + sousedni.getNazev();
@@ -142,6 +142,20 @@ public class Prostor {
         return vracenyText;
     }
 
+    
+    /**
+     * Vrací textový řetězec, který popisuje sousední východy, například:
+     * "vychody: hala ".
+     *
+     * @return Popis východů - názvů sousedních prostorů
+     */
+    public String getPopisVychodu() {
+        String vracenyText = "";
+        for (Prostor sousedni : vychody) {
+            vracenyText += " " + sousedni.getNazev()+",";
+        }
+        return vracenyText;
+    }
     /**
      * Vrací prostor, který sousedí s aktuálním prostorem a jehož název je zadán
      * jako parametr. Pokud prostor s udaným jménem nesousedí s aktuálním
@@ -180,6 +194,12 @@ public class Prostor {
         return veci;
     }
    
+    public Set<Vec> getSeznamVeci()
+    {
+        return seznamVeci;
+    }
+    
+    
     /**
      * Metoda pro výpis věcí v místnosti
      * 
@@ -196,6 +216,7 @@ public class Prostor {
         return veci;
     }
     
+   
     /**
      * Metoda pro zjištění, zda je postava v místnosti
      * 

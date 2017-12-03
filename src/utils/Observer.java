@@ -9,7 +9,7 @@ import logika.IHra;
 
 /**
  *
- * @author xzenj02
+ * @author JanSlechta
  */
 public interface Observer {
     

@@ -49,6 +49,7 @@ public class PrikazProzkoumej implements IPrikaz
                text="nic noveho jsi nenasel";
                 
             }else{
+                plan.notifyAllObservers();
                text= "Nasel jsi: "+ neco;
             }
         
