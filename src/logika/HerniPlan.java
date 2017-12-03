@@ -51,12 +51,12 @@ public class HerniPlan implements Subject, SubjektZmenyKufru {
         Prostor vrakoviste = new Prostor("vrakoviste", " vrakoviste, mraky plechu, dost materialu", 40.5,50);
         Prostor tunningShop = new Prostor("tunningShop"," Obchůdek s autodíly", 250.5,250);
         Prostor zavodSCarlem = new Prostor("zavodSCarlem"," jdeš vyzvat Carla", 240.5,50);
-        Prostor garaz = new Prostor("garaz"," garaz, konečně možnost namontovat díly na auto", 230.5,140);
-        Prostor prace = new Prostor("prace","práce, možnost si vydělat peníze", 40.5,250);
-        Prostor jaimehoBarak = new Prostor("jaimehoBarak","Dobrej kámoš, vždycky poradí", 110.5,40);
+        Prostor garaz = new Prostor("garaz"," garaz, konečně možnost namontovat díly na auto",20.5,140);
+        Prostor prace = new Prostor("prace","práce, možnost si vydělat peníze",  110.5,40);
+        Prostor jaimehoBarak = new Prostor("jaimehoBarak","Dobrej kámoš, vždycky poradí", 20.5,240);
         Prostor zkusebniDraha = new Prostor("zkusebniDraha", " otestoval si svoje auto, zeptej se personalu, jak to dopadlo", 130.5,250);
         Prostor mamincinyDobrutky = new Prostor("mamincinyDobrutky"," cukrářství, určitě půjdou získat nějaké dobrůtky", 190.5,50);
-        Prostor policejniStanice = new Prostor("policejniStanice"," konečně si našel mistra šerifa", 110.5,40);
+        Prostor policejniStanice = new Prostor("policejniStanice"," konečně si našel mistra šerifa", 230.5,140);
         
         // přiřazují se průchody mezi prostory (sousedící prostory)
         namesti.setVychod(vrakoviste);
